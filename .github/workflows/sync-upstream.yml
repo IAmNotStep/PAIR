@@ -1,9 +1,6 @@
 name: Sync with eshgov/PAIR
 
 on:
-  schedule:
-    # Runs every 30 minutes to stay in sync during live collaboration
-    - cron: '*/30 * * * *'
   workflow_dispatch:
     inputs:
       direction:
@@ -23,9 +20,7 @@ jobs:
   pull-from-upstream:
     name: Pull changes from eshgov/PAIR
     runs-on: ubuntu-latest
-    if: >
-      github.event_name == 'schedule' ||
-      github.event.inputs.direction == 'pull-from-upstream'
+    if: github.event.inputs.direction == 'pull-from-upstream'
     steps:
       - name: Checkout fork
         uses: actions/checkout@v4
