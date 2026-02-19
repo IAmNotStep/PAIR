@@ -1,0 +1,74 @@
+name: Sync with eshgov/PAIR
+
+on:
+  workflow_dispatch:
+    inputs:
+      direction:
+        description: 'Sync direction'
+        required: true
+        default: 'pull-from-upstream'
+        type: choice
+        options:
+          - pull-from-upstream
+          - push-to-upstream
+      branch:
+        description: 'Branch to sync (default: main)'
+        required: false
+        default: 'main'
+
+jobs:
+  pull-from-upstream:
+    name: Pull changes from eshgov/PAIR
+    runs-on: ubuntu-latest
+    if: github.event.inputs.direction == 'pull-from-upstream'
+    steps:
+      - name: Checkout fork
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0
+          ref: ${{ github.event.inputs.branch || 'main' }}
+
+      - name: Add upstream remote
+        run: |
+          git remote add upstream https://github.com/eshgov/PAIR.git
+          git fetch upstream
+
+      - name: Merge upstream into fork
+        run: |
+          BRANCH="${{ github.event.inputs.branch || 'main' }}"
+          git checkout "$BRANCH"
+          git merge "upstream/$BRANCH" --no-edit --allow-unrelated-histories || {
+            echo "Merge conflict detected — skipping auto-merge. Resolve conflicts locally."
+            exit 1
+          }
+          git push origin "$BRANCH"
+
+  push-to-upstream:
+    name: Push changes to eshgov/PAIR
+    runs-on: ubuntu-latest
+    if: github.event.inputs.direction == 'push-to-upstream'
+    steps:
+      - name: Checkout fork
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.UPSTREAM_PAT }}
+          fetch-depth: 0
+
+      - name: Configure git identity
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Add upstream remote with PAT
+        env:
+          UPSTREAM_PAT: ${{ secrets.UPSTREAM_PAT }}
+        run: |
+          git remote add upstream "https://x-access-token:${UPSTREAM_PAT}@github.com/eshgov/PAIR.git"
+
+      - name: Push fork branch to upstream
+        run: |
+          BRANCH="${{ github.event.inputs.branch || 'main' }}"
+          git fetch origin "$BRANCH"
+          git checkout "$BRANCH"
+          git push upstream "$BRANCH"
