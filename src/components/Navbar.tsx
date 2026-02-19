@@ -21,7 +21,7 @@ export default function Navbar() {
                             PAIR
                         </Link>
                     </div>
-                    <div className="hidden md:flex space-x-8">
+                    <div className="hidden md:flex space-x-8 items-center">
                         {navItems.map((item) => (
                             <Link
                                 key={item.name}
@@ -31,6 +31,18 @@ export default function Navbar() {
                                 {item.name}
                             </Link>
                         ))}
+                        <Link
+                            href="/login"
+                            className="text-sm font-medium text-gray-900 hover:text-gray-500 transition-colors uppercase tracking-wide"
+                        >
+                            Login
+                        </Link>
+                        <Link
+                            href="/signup"
+                            className="bg-black text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-gray-800 transition-colors uppercase tracking-wide"
+                        >
+                            Sign Up
+                        </Link>
                     </div>
                     {/* Mobile menu placeholder - can be expanded later */}
                     <div className="md:hidden">
