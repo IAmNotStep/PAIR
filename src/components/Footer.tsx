@@ -16,11 +16,12 @@ export default function Footer() {
                     <div>
                         <h4 className="text-lg font-semibold mb-4">Sections</h4>
                         <ul className="space-y-2 text-sm text-gray-400">
-                            <li><Link href="/humor" className="hover:text-white transition-colors">Humor</Link></li>
-                            <li><Link href="/technical" className="hover:text-white transition-colors">Technical</Link></li>
-                            <li><Link href="/spotlights" className="hover:text-white transition-colors">Spotlights</Link></li>
-                            <li><Link href="/opinion" className="hover:text-white transition-colors">Opinion</Link></li>
                             <li><Link href="/news" className="hover:text-white transition-colors">News</Link></li>
+                            <li><Link href="/technical" className="hover:text-white transition-colors">Technical</Link></li>
+                            <li><Link href="/opinion" className="hover:text-white transition-colors">Opinion</Link></li>
+                            <li><Link href="/spotlights" className="hover:text-white transition-colors">Spotlights</Link></li>
+                            <li><Link href="/humor" className="hover:text-white transition-colors">Humor</Link></li>
+                            <li><Link href="/games" className="hover:text-white transition-colors">Games</Link></li>
                         </ul>
                     </div>
                     <div>

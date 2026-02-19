@@ -4,12 +4,12 @@ import Link from 'next/link';
 
 export default function Navbar() {
     const navItems = [
-        { name: 'Humor', href: '/humor' },
-        { name: 'Technical', href: '/technical' },
-        { name: 'Spotlights', href: '/spotlights' },
-        { name: 'Opinion', href: '/opinion' },
         { name: 'News', href: '/news' },
-        { name: 'About', href: '/about' },
+        { name: 'Technical', href: '/technical' },
+        { name: 'Opinion', href: '/opinion' },
+        { name: 'Spotlight', href: '/spotlights' },
+        { name: 'Humor', href: '/humor' },
+        { name: 'Games', href: '/games' },
     ];
 
     return (
